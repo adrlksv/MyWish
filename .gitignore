@@ -6,3 +6,4 @@ src/migrations/__pycache__/
 src/migrations/versions/__pycache__/
 src/users/__pycache__/
 src/wishlists/__pycache__/
+src/dao/__pycache__/

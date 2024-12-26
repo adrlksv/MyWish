@@ -27,3 +27,11 @@ class UserIsNotPresentException(WishListException):
 class UserAlreadyExistsException(WishListException):
     status_code = status.HTTP_409_CONFLICT
     detail = "User already exists"
+
+class IncorrectEmailOrPasswordException(WishListException):
+    status_code = status.HTTP_401_UNAUTHORIZED
+    detail = "Incorrect email or password"
+
+class InternalServerErrorException(WishListException):
+    status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+    detail = "Internal server error"

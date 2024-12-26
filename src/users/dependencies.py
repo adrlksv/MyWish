@@ -2,7 +2,7 @@ from datetime import datetime
 from fastapi import Request, Depends
 from jwt import PyJWTError, decode
 
-from src.config import SECRET_KEY, ALGORITHM
+from src.config import settings
 
 from src.users.dao import UsersDAO
 from src.exceptions import (IncorrectTokenFormatException, TokenAbsentException, 
@@ -19,7 +19,7 @@ def get_token(request: Request):
 async def get_current_user(token: str = Depends(get_token)):
     try:
         payload = decode(
-            token, SECRET_KEY, ALGORITHM
+            token, settings.SECRET_KEY, settings.ALGORITHM
         )
     except PyJWTError:
         raise IncorrectTokenFormatException

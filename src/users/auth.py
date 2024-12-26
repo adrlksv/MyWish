@@ -8,7 +8,7 @@ from pydantic import EmailStr
 from typing import Optional
 
 from src.users.dao import UsersDAO
-from src.config import SECRET_KEY, ALGORITHM
+from src.config import settings
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -27,7 +27,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
     expire = datetime.utcnow() + timedelta(minutes=30)
     to_encode.update({"exp": expire})
     encoded_jwt = encode(
-        to_encode, SECRET_KEY, ALGORITHM
+        to_encode, settings.SECRET_KEY, settings.ALGORITHM
     )
 
     return encoded_jwt
@@ -43,7 +43,7 @@ async def authenticate_user(email: EmailStr, password: str) -> Optional[dict]:
 
 def decode_access_token(token: str) -> dict:
     try:
-        payload = decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         return payload
     except Exception as e:
         print(f"Enter decoding token: {e}")
